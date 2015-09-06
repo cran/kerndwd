@@ -1,27 +1,26 @@
       ! --------------------------------------------------
-      SUBROUTINE kdwd (qval, Kmat, nobs, y, nlam, ulam, &
-        & eps, maxit, gamma, anlam, npass, jerr, alpmat)
+      SUBROUTINE klum (aval, cval, Kmat, nobs, y, nlam, &
+        & ulam, eps, maxit, gamma, anlam, npass, jerr, alpmat)
       ! --------------------------------------------------
         IMPLICIT NONE
         ! - - - arg types - - -
         INTEGER :: nobs, nlam, anlam, jerr, maxit, npass (nlam)
-        DOUBLE PRECISION :: eps, qval, Kmat (nobs, nobs)
+        DOUBLE PRECISION :: eps, aval, cval, Kmat (nobs, nobs)
         DOUBLE PRECISION :: y (nobs), ulam (nlam)
         DOUBLE PRECISION :: gamma, alpmat (nobs+1, nlam)
         ! - - - local declarations - - -
         INTEGER :: i, j, l, info
         DOUBLE PRECISION :: zvec (nobs), rds (nobs + 1)
-        DOUBLE PRECISION :: mbd, minv, decib, fdr, Ksum (nobs)
+        DOUBLE PRECISION :: mbd, minv, decib, adc, Ksum (nobs)
         DOUBLE PRECISION :: r (nobs), phi (nobs), dif (nobs+1)
         DOUBLE PRECISION :: alpvec (nobs+1), oalpvec (nobs+1)
         DOUBLE PRECISION :: Amat(nobs+1,nobs+1), Bmat(nobs+1,nobs+1)
         DOUBLE PRECISION :: Pmat(nobs+1,nobs+1), Pinv (nobs+1,nobs+1)
-
         ! - - - begin - - -
-        mbd = (qval + 1.0D0) * (qval + 1.0D0) / qval
+        mbd = (aval + 1.0D0) * (cval + 1.0D0) / aval
         minv = 1.0D0 / mbd
-        decib = qval / (qval + 1.0D0)
-        fdr = - decib ** (qval + 1.0D0)
+        decib = cval / (cval + 1.0D0)
+        adc = aval - cval
         npass = 0
         r = 0.0D0
         alpmat = 0.0D0
@@ -33,7 +32,7 @@
         Amat(1, 2:(nobs + 1)) = Ksum
         Amat(2:(nobs + 1), 1) = Ksum
         Amat(2:(nobs + 1), 2:(nobs + 1)) = Matmul(Kmat, Kmat)
-        DO i = 1, (nobs+1)
+        DO i = 1,(nobs+1)
           Amat(i, i) = Amat(i, i) + gamma
         ENDDO 
         Bmat = 0.0D0
@@ -45,7 +44,7 @@
           Pmat = Amat + ulam(l) * Bmat
           CALL DPOTRF("L", (nobs+1), Pmat, (nobs+1), info)
           CALL DPOTRI("L", (nobs+1), Pmat, (nobs+1), info)
-          DO i = 1, (nobs+1)
+          DO i = 1,(nobs+1)
             DO j = 1, i
               Pinv(i, j) = Pmat(i, j)
               Pinv(j, i) = Pmat(i, j) 
@@ -55,7 +54,8 @@
           update_alpha: DO
             DO j = 1, nobs
               IF (r(j) > decib) THEN
-                phi(j) = r(j) ** (- qval - 1.0D0) * fdr
+                phi(j) = -(aval / ((1.0D0 + cval) * r(j) + adc)) &
+                  & ** (aval + 1.0D0)
               ELSE
                 phi(j) = -1.0D0
               END IF
@@ -67,7 +67,7 @@
             dif = - 1.0D0 * minv * Matmul(Pinv, rds)
             alpvec = alpvec + dif
             r = r + y * (dif(1) + Matmul(Kmat, dif(2:(nobs + 1))))
-            npass(l) = npass(l) + 1 
+            npass(l) = npass(l) + 1
             IF (Sum(dif * dif) < eps) EXIT
             IF (Sum(npass) > maxit) EXIT
           ENDDO update_alpha
@@ -78,32 +78,31 @@
           ENDIF
           anlam = l
         ENDDO lambda_loop
-      END SUBROUTINE kdwd
+      END SUBROUTINE klum      
 
       ! --------------------------------------------------
-      SUBROUTINE kdwdint (qval, Kmat, nobs, y, nlam, ulam, &
-        & eps, maxit, gamma, anlam, npass, jerr, alpmat)
+      SUBROUTINE klumint (aval, cval, Kmat, nobs, y, nlam, &
+        & ulam, eps, maxit, gamma, anlam, npass, jerr, alpmat)
       ! --------------------------------------------------
         IMPLICIT NONE
         ! - - - arg types - - -
-        INTEGER :: nobs, nlam, anlam, jerr, maxit, npass (nlam), qval
-        DOUBLE PRECISION :: eps, Kmat (nobs, nobs)
+        INTEGER :: aval, nobs, nlam, anlam, jerr, maxit, npass (nlam)
+        DOUBLE PRECISION :: eps, cval, Kmat (nobs, nobs)
         DOUBLE PRECISION :: y (nobs), ulam (nlam)
         DOUBLE PRECISION :: gamma, alpmat (nobs+1, nlam)
         ! - - - local declarations - - -
         INTEGER :: i, j, l, info
         DOUBLE PRECISION :: zvec (nobs), rds (nobs + 1)
-        DOUBLE PRECISION :: mbd, minv, decib, fdr, Ksum (nobs)
+        DOUBLE PRECISION :: mbd, minv, decib, adc, Ksum (nobs)
         DOUBLE PRECISION :: r (nobs), phi (nobs), dif (nobs+1)
         DOUBLE PRECISION :: alpvec (nobs+1), oalpvec (nobs+1)
         DOUBLE PRECISION :: Amat(nobs+1,nobs+1), Bmat(nobs+1,nobs+1)
         DOUBLE PRECISION :: Pmat(nobs+1,nobs+1), Pinv (nobs+1,nobs+1)
-
         ! - - - begin - - -
-        mbd = (qval + 1.0D0) * (qval + 1.0D0) / qval
+        mbd = (aval + 1.0D0) * (cval + 1.0D0) / aval
         minv = 1.0D0 / mbd
-        decib = qval / (qval + 1.0D0)
-        fdr = - decib ** (qval + 1.0D0)
+        decib = cval / (cval + 1.0D0)
+        adc = aval - cval
         npass = 0
         r = 0.0D0
         alpmat = 0.0D0
@@ -115,7 +114,7 @@
         Amat(1, 2:(nobs + 1)) = Ksum
         Amat(2:(nobs + 1), 1) = Ksum
         Amat(2:(nobs + 1), 2:(nobs + 1)) = Matmul(Kmat, Kmat)
-        DO i = 1, (nobs+1)
+        DO i = 1,(nobs+1)
           Amat(i, i) = Amat(i, i) + gamma
         ENDDO 
         Bmat = 0.0D0
@@ -127,7 +126,7 @@
           Pmat = Amat + ulam(l) * Bmat
           CALL DPOTRF("L", (nobs+1), Pmat, (nobs+1), info)
           CALL DPOTRI("L", (nobs+1), Pmat, (nobs+1), info)
-          DO i = 1, (nobs+1)
+          DO i = 1,(nobs+1)
             DO j = 1, i
               Pinv(i, j) = Pmat(i, j)
               Pinv(j, i) = Pmat(i, j) 
@@ -137,7 +136,8 @@
           update_alpha: DO
             DO j = 1, nobs
               IF (r(j) > decib) THEN
-                phi(j) = r(j) ** (- qval - 1) * fdr
+                phi(j) = -(Real(aval) / ((1.0D0 + cval) * r(j) &
+                  & + adc)) ** (aval + 1)
               ELSE
                 phi(j) = -1.0D0
               END IF
@@ -149,7 +149,7 @@
             dif = - 1.0D0 * minv * Matmul(Pinv, rds)
             alpvec = alpvec + dif
             r = r + y * (dif(1) + Matmul(Kmat, dif(2:(nobs + 1))))
-            npass(l) = npass(l) + 1 
+            npass(l) = npass(l) + 1
             IF (Sum(dif * dif) < eps) EXIT
             IF (Sum(npass) > maxit) EXIT
           ENDDO update_alpha
@@ -160,4 +160,4 @@
           ENDIF
           anlam = l
         ENDDO lambda_loop
-      END SUBROUTINE kdwdint
+      END SUBROUTINE klumint

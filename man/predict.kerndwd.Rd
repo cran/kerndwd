@@ -1,6 +1,6 @@
 \name{predict.kerndwd}
 \alias{predict.kerndwd}
-\title{use DWD to predict class labels for new observations}
+\title{predict class labels for new observations}
 \description{
 Predict the binary class labels or the fitted values of an \code{\link{kerndwd}} object.
 }
@@ -28,17 +28,16 @@ Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 Wang, B. and Zou, H. (2015)
 ``Another Look at DWD: Thrifty Algorithm and Bayes Risk Consistency in RKHS". \cr
 \url{http://arxiv.org/abs/1508.05913v1.pdf}\cr
-\cr
 }
  
 \seealso{\code{\link{kerndwd}}}
 \examples{
-data(Haberman)
-Haberman$X = scale(Haberman$X, center=TRUE, scale=TRUE)
+data(BUPA)
+BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
 lambda = 10^(seq(-3, 3, length.out=10))
 kern = rbfdot(sigma=1)
-m1 = kerndwd(Haberman$X, Haberman$y, kern, qval=1, 
-  lambda=lambda, eps=1e-5, maxit=1e5)
-predict(m1, kern, Haberman$X, tail(Haberman$X))
+m1 = kerndwd(BUPA$X, BUPA$y, kern, family="DWD",
+  qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
+predict(m1, kern, BUPA$X, tail(BUPA$X))
 }
 

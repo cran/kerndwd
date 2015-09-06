@@ -14,9 +14,10 @@ cvcompute = function(mat, foldid, nlams) {
   list(cvraw = outmat, N = N)
 }
 
-dwdloss = function(u, qv) {
+dwdloss = function(u, qval) {
   ## generalized DWD Loss
-  ifelse(u > (qv/(qv+1)), 1/(u^qv) * (qv^qv)/((qv+1)^(qv+1)), 1 - u )
+  ifelse(u > (qval/(qval+1)), 
+    1/(u^qval) * (qval^qval) / ((qval+1)^(qval+1)), 1 - u )
 }
 
 err = function(n, maxit) {
@@ -56,3 +57,8 @@ getmin = function(lambda, cvm, cvsd) {
 	  cvm.min = cvmin, cvm.1se = cv.1se)
 }
 
+lumloss = function(u, aval, cval) {
+  ## LUM Loss
+  ifelse(u < (cval/(cval+1)), 1 - u,
+    (aval / ((1 + cval) * u - cval + aval) ^ aval ) / (1 + cval))
+}

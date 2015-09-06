@@ -1,27 +1,27 @@
       ! --------------------------------------------------
-      SUBROUTINE wkdwd (qval, Kmat, weights, nobs, y, nlam, ulam, &
-        & eps, maxit, gamma, anlam, npass, jerr, alpmat)
+      SUBROUTINE wklum (aval, cval, Kmat, weights, nobs, y, nlam, &
+        & ulam, eps, maxit, gamma, anlam, npass, jerr, alpmat)
       ! --------------------------------------------------
         IMPLICIT NONE
         ! - - - arg types - - -
         INTEGER :: nobs, nlam, anlam, jerr, maxit, npass (nlam)
-        DOUBLE PRECISION :: eps, qval, Kmat (nobs, nobs)
+        DOUBLE PRECISION :: eps, aval, cval, Kmat (nobs, nobs)
         DOUBLE PRECISION :: y (nobs), ulam (nlam), weights(nobs)
         DOUBLE PRECISION :: gamma, alpmat (nobs+1, nlam)
         ! - - - local declarations - - -
         INTEGER :: i, j, l, info
         DOUBLE PRECISION :: zvec (nobs), rds (nobs + 1)
-        DOUBLE PRECISION :: mbd, minv, decib, fdr, WKsum (nobs)
+        DOUBLE PRECISION :: mbd, minv, decib, adc, WKsum (nobs)
         DOUBLE PRECISION :: r (nobs), phi (nobs), dif (nobs+1)
         DOUBLE PRECISION :: alpvec (nobs+1), oalpvec (nobs+1)
         DOUBLE PRECISION :: Amat(nobs+1,nobs+1), Bmat(nobs+1,nobs+1)
         DOUBLE PRECISION :: Pmat(nobs+1,nobs+1), Pinv (nobs+1,nobs+1)
         DOUBLE PRECISION :: WK(nobs, nobs)
         ! - - - begin - - -
-        mbd = (qval + 1.0D0) * (qval + 1.0D0) / qval
+        mbd = (aval + 1.0D0) * (cval + 1.0D0) / aval
         minv = 1.0D0 / mbd
-        decib = qval / (qval + 1.0D0)
-        fdr = - decib ** (qval + 1.0D0)
+        decib = cval / (cval + 1.0D0)
+        adc = aval - cval
         npass = 0
         r = 0.0D0
         alpmat = 0.0D0
@@ -60,7 +60,8 @@
           update_alpha: DO
             DO j = 1, nobs
               IF (r(j) > decib) THEN
-                phi(j) = r(j) ** (- qval - 1.0D0) * fdr
+                phi(j) = -(aval / ((1.0D0 + cval) * r(j) + adc)) &
+                  & ** (aval + 1.0D0)
               ELSE
                 phi(j) = -1.0D0
               END IF
@@ -83,32 +84,32 @@
           ENDIF
           anlam = l
         ENDDO lambda_loop
-      END SUBROUTINE wkdwd
+      END SUBROUTINE wklum      
 
       ! --------------------------------------------------
-      SUBROUTINE wkdwdint (qval, Kmat, weights, nobs, y, nlam, &
+      SUBROUTINE wklumint (aval, cval, Kmat, weights, nobs, y, nlam, &
         & ulam, eps, maxit, gamma, anlam, npass, jerr, alpmat)
       ! --------------------------------------------------
         IMPLICIT NONE
         ! - - - arg types - - -
-        INTEGER :: nobs, nlam, anlam, jerr, maxit, npass (nlam), qval
-        DOUBLE PRECISION :: eps, Kmat (nobs, nobs)
+        INTEGER :: aval, nobs, nlam, anlam, jerr, maxit, npass (nlam)
+        DOUBLE PRECISION :: eps, cval, Kmat (nobs, nobs)
         DOUBLE PRECISION :: y (nobs), ulam (nlam), weights(nobs)
         DOUBLE PRECISION :: gamma, alpmat (nobs+1, nlam)
         ! - - - local declarations - - -
         INTEGER :: i, j, l, info
         DOUBLE PRECISION :: zvec (nobs), rds (nobs + 1)
-        DOUBLE PRECISION :: mbd, minv, decib, fdr, WKsum (nobs)
+        DOUBLE PRECISION :: mbd, minv, decib, adc, WKsum (nobs)
         DOUBLE PRECISION :: r (nobs), phi (nobs), dif (nobs+1)
         DOUBLE PRECISION :: alpvec (nobs+1), oalpvec (nobs+1)
         DOUBLE PRECISION :: Amat(nobs+1,nobs+1), Bmat(nobs+1,nobs+1)
         DOUBLE PRECISION :: Pmat(nobs+1,nobs+1), Pinv (nobs+1,nobs+1)
         DOUBLE PRECISION :: WK(nobs, nobs)
         ! - - - begin - - -
-        mbd = (qval + 1.0D0) * (qval + 1.0D0) / qval
+        mbd = (aval + 1.0D0) * (cval + 1.0D0) / aval
         minv = 1.0D0 / mbd
-        decib = qval / (qval + 1.0D0)
-        fdr = - decib ** (qval + 1.0D0)
+        decib = cval / (cval + 1.0D0)
+        adc = aval - cval
         npass = 0
         r = 0.0D0
         alpmat = 0.0D0
@@ -131,7 +132,7 @@
         Bmat = 0.0D0
         Bmat(2:(nobs + 1), 2:(nobs + 1)) = 2.0 * Real(nobs) &
           & * minv * Kmat
-        lambda_loop: DO l = 1, nlam
+        lambda_loop: DO l = 1,nlam
           dif = 0.0D0
         ! - - - computing Ku inverse - - - 
           Pmat = Amat + ulam(l) * Bmat
@@ -147,7 +148,8 @@
           update_alpha: DO
             DO j = 1, nobs
               IF (r(j) > decib) THEN
-                phi(j) = r(j) ** (- qval - 1) * fdr
+                phi(j) = -(Real(aval) / ((1.0D0 + cval) * r(j) &
+                  & + adc)) ** (aval + 1)
               ELSE
                 phi(j) = -1.0D0
               END IF
@@ -170,4 +172,4 @@
           ENDIF
           anlam = l
         ENDDO lambda_loop
-      END SUBROUTINE wkdwdint
+      END SUBROUTINE wklumint

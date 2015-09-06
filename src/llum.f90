@@ -1,46 +1,40 @@
       ! --------------------------------------------------
-      SUBROUTINE wldwd (qval, Xmat, weights, nobs, np, y, nlam, &
-        & ulam, eps, maxit, gamma, anlam, npass, jerr, btmat)
+      SUBROUTINE llum (aval, cval, Xmat, nobs, np, y, nlam, ulam, &
+        & eps, maxit, gamma, anlam, npass, jerr, btmat)
       ! --------------------------------------------------
         IMPLICIT NONE
         ! - - - arg types - - -
         INTEGER :: nobs, np, nlam, anlam, jerr, maxit, npass (nlam)
-        DOUBLE PRECISION :: eps, qval, Xmat (nobs, np)
-        DOUBLE PRECISION :: y (nobs), ulam (nlam), weights (nobs)
+        DOUBLE PRECISION :: eps, aval, cval, Xmat (nobs, np)
+        DOUBLE PRECISION :: y (nobs), ulam (nlam)
         DOUBLE PRECISION :: gamma, btmat (np+1, nlam)
         ! - - - local declarations - - -
         INTEGER :: i, j, l, info
         DOUBLE PRECISION :: XmatT (np, nobs)
-        DOUBLE PRECISION :: Ki (np+1, nobs), WXsum (np)
-        DOUBLE PRECISION :: mbd, minv, decib, fdr
+        DOUBLE PRECISION :: Ki (np+1, nobs), Xsum (np)
+        DOUBLE PRECISION :: mbd, minv, decib, adc
         DOUBLE PRECISION :: r (nobs), phi (nobs), dif (np+1)
         DOUBLE PRECISION :: bt (np+1), btvec (np+1), obtvec (np+1)
         DOUBLE PRECISION :: Amat (np+1, np+1), Bvec (np+1)
         DOUBLE PRECISION :: Pmat (np+1, np+1), Pinv (np+1, np+1)
-        DOUBLE PRECISION :: WX (nobs, np)
         ! - - - begin - - -
         bt = 0.0D0
         XmatT = Transpose(Xmat)
         Ki = 1.0D0
         Ki(2:(np + 1), :) = XmatT
-        mbd = (qval + 1.0D0) * (qval + 1.0D0) / qval
+        mbd = (aval + 1.0D0) * (cval + 1.0D0) / aval
         minv = 1.0D0 / mbd
-        decib = qval / (qval + 1.0D0)
-        fdr = - decib ** (qval + 1.0D0)
+        decib = cval / (cval + 1.0D0)
+        adc = aval - cval
         npass = 0
         r = 0.0D0
         btmat = 0.0D0
         btvec = 0.0D0
-        DO j = 1, np
-          DO i = 1, nobs
-            WX(i, j) = weights(i) * Xmat(i, j)
-          ENDDO
-        ENDDO
-        WXsum = Sum(WX, dim=1)
-        Amat(1, 1) = Sum(weights)
-        Amat(1, 2:(np + 1)) = WXsum
-        Amat(2:(np + 1), 1) = WXsum
-        Amat(2:(np + 1), 2:(np + 1)) = Matmul(XmatT, WX)
+        Xsum = Sum(Xmat, dim=1)
+        Amat(1, 1) = Real(nobs)
+        Amat(1, 2:(np + 1)) = Xsum
+        Amat(2:(np + 1), 1) = Xsum
+        Amat(2:(np + 1), 2:(np + 1)) = Matmul(XmatT, Xmat)
         DO i = 1, (np + 1)
           Amat(i, i) = Amat(i, i) + gamma
         ENDDO 
@@ -65,7 +59,8 @@
           update_beta: DO
             DO j = 1, nobs
               IF (r(j) > decib) THEN
-                phi(j) = r(j) ** (- qval - 1.0D0) * fdr
+                phi(j) = -(aval / ((1.0D0 + cval) * r(j) + adc)) &
+                  & ** (aval + 1.0D0)
               ELSE
                 phi(j) = -1.0D0
               END IF
@@ -74,7 +69,7 @@
             bt(2:(np+1)) = btvec(2:(np+1))
             btvec = obtvec + minv * &
               & Matmul(Pinv, (- 2 * Real(nobs) * ulam(l) * bt - &
-              & Matmul(Ki, (weights * (y * phi)))))
+              & Matmul(Ki, (y * phi))))
             dif = btvec - obtvec
             r = r + y * Matmul(dif, Ki)
             npass(l) = npass(l) + 1
@@ -87,53 +82,47 @@
             EXIT
           ENDIF
           anlam = l
-        ENDDO lambda_loop
-      END SUBROUTINE wldwd
+        ENDDO lambda_loop 
+      END SUBROUTINE llum     
 
       ! --------------------------------------------------
-      SUBROUTINE wldwdint (qval, Xmat, weights, nobs, np, y, nlam, &
-        & ulam, eps, maxit, gamma, anlam, npass, jerr, btmat)
+      SUBROUTINE llumint (aval, cval, Xmat, nobs, np, y, nlam, ulam, &
+        & eps, maxit, gamma, anlam, npass, jerr, btmat)
       ! --------------------------------------------------
         IMPLICIT NONE
         ! - - - arg types - - -
-        INTEGER :: nobs, np, nlam, anlam, jerr, maxit, qval
-        INTEGER :: npass (nlam)
-        DOUBLE PRECISION :: eps, Xmat (nobs, np)
-        DOUBLE PRECISION :: y (nobs), ulam (nlam), weights (nobs)
+        INTEGER :: aval, nobs, np, nlam, anlam
+        INTEGER :: jerr, maxit, npass (nlam)
+        DOUBLE PRECISION :: eps, cval, Xmat (nobs, np)
+        DOUBLE PRECISION :: y (nobs), ulam (nlam)
         DOUBLE PRECISION :: gamma, btmat (np+1, nlam)
         ! - - - local declarations - - -
         INTEGER :: i, j, l, info
         DOUBLE PRECISION :: XmatT (np, nobs)
-        DOUBLE PRECISION :: Ki (np+1, nobs), WXsum (np)
-        DOUBLE PRECISION :: mbd, minv, decib, fdr
+        DOUBLE PRECISION :: Ki (np+1, nobs), Xsum (np)
+        DOUBLE PRECISION :: mbd, minv, decib, adc
         DOUBLE PRECISION :: r (nobs), phi (nobs), dif (np+1)
         DOUBLE PRECISION :: bt (np+1), btvec (np+1), obtvec (np+1)
         DOUBLE PRECISION :: Amat (np+1, np+1), Bvec (np+1)
         DOUBLE PRECISION :: Pmat (np+1, np+1), Pinv (np+1, np+1)
-        DOUBLE PRECISION :: WX (nobs, np)
         ! - - - begin - - -
         bt = 0.0D0
         XmatT = Transpose(Xmat)
         Ki = 1.0D0
         Ki(2:(np + 1), :) = XmatT
-        mbd = (qval + 1.0D0) * (qval + 1.0D0) / qval
+        mbd = (aval + 1.0D0) * (cval + 1.0D0) / aval
         minv = 1.0D0 / mbd
-        decib = qval / (qval + 1.0D0)
-        fdr = - decib ** (qval + 1.0D0)
+        decib = cval / (cval + 1.0D0)
+        adc = Real(aval) - cval
         npass = 0
         r = 0.0D0
         btmat = 0.0D0
         btvec = 0.0D0
-        DO j = 1, np
-          DO i = 1, nobs
-            WX(i, j) = weights(i) * Xmat(i, j)
-          ENDDO
-        ENDDO
-        WXsum = Sum(WX, dim=1)
-        Amat(1, 1) = Sum(weights)
-        Amat(1, 2:(np + 1)) = WXsum
-        Amat(2:(np + 1), 1) = WXsum
-        Amat(2:(np + 1), 2:(np + 1)) = Matmul(XmatT, WX)
+        Xsum = Sum(Xmat, dim=1)
+        Amat(1, 1) = Real(nobs)
+        Amat(1, 2:(np + 1)) = Xsum
+        Amat(2:(np + 1), 1) = Xsum
+        Amat(2:(np + 1), 2:(np + 1)) = Matmul(XmatT, Xmat)
         DO i = 1, (np + 1)
           Amat(i, i) = Amat(i, i) + gamma
         ENDDO 
@@ -158,7 +147,8 @@
           update_beta: DO
             DO j = 1, nobs
               IF (r(j) > decib) THEN
-                phi(j) = r(j) ** (- qval - 1) * fdr
+                phi(j) = -(aval / ((1.0D0 + cval) * r(j) + adc)) &
+                  & ** (aval + 1)
               ELSE
                 phi(j) = -1.0D0
               END IF
@@ -167,7 +157,7 @@
             bt(2:(np+1)) = btvec(2:(np+1))
             btvec = obtvec + minv * &
               & Matmul(Pinv, (- 2 * Real(nobs) * ulam(l) * bt - &
-              & Matmul(Ki, (weights * (y * phi)))))
+              & Matmul(Ki, (y * phi))))
             dif = btvec - obtvec
             npass(l) = npass(l) + 1
             r = r + y * Matmul(dif, Ki)
@@ -181,4 +171,4 @@
           ENDIF
           anlam = l
         ENDDO lambda_loop
-      END SUBROUTINE wldwdint
+      END SUBROUTINE llumint  

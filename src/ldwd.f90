@@ -66,14 +66,14 @@
             ENDDO
             obtvec = btvec
             bt(2:(np+1)) = btvec(2:(np+1))
-            btvec = obtvec + (Real(nobs) * minv) * &
-              & Matmul(Pinv, (- 2 * ulam(l) * bt - &
-              & Matmul(Ki, (y * phi)) / Real(nobs)))
+            btvec = obtvec + minv * &
+              & Matmul(Pinv, (- 2 * Real(nobs) * ulam(l) * bt - &
+              & Matmul(Ki, (y * phi))))
             dif = btvec - obtvec
+            r = r + y * Matmul(dif, Ki)
             npass(l) = npass(l) + 1
             IF (Sum(dif * dif) < eps) EXIT
             IF (Sum(npass) > maxit) EXIT
-            r = r + y * Matmul(dif, Ki)
           ENDDO update_beta
           btmat(:, l) = btvec
           IF (Sum(npass) > maxit) THEN
@@ -152,14 +152,14 @@
             ENDDO
             obtvec = btvec
             bt(2:(np+1)) = btvec(2:(np+1))
-            btvec = obtvec + (Real(nobs) * minv) * &
-              & Matmul(Pinv, (- 2 * ulam(l) * bt - &
-              & Matmul(Ki, (y * phi)) / Real(nobs)))
+            btvec = obtvec + minv * &
+              & Matmul(Pinv, (- 2 * Real(nobs) * ulam(l) * bt - &
+              & Matmul(Ki, (y * phi))))
             dif = btvec - obtvec
+            r = r + y * Matmul(dif, Ki)
             npass(l) = npass(l) + 1
             IF (Sum(dif * dif) < eps) EXIT
             IF (Sum(npass) > maxit) EXIT
-            r = r + y * Matmul(dif, Ki)
           ENDDO update_beta
           btmat(:, l) = btvec
           IF (Sum(npass) > maxit) THEN

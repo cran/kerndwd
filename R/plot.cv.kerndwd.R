@@ -3,9 +3,9 @@ plot.cv.kerndwd = function(x, sign.lambda=1, ...) {
   xlab = "log(Lambda)"
   if (sign.lambda < 0) 
     xlab = paste0("-", xlab)
-  plot.args = list(x=sign.lambda * log(cvobj$lambda), 
-    y=cvobj$cvm, ylim=range(cvobj$cvup, cvobj$cvlo), 
-    xlab=xlab, ylab=cvobj$name, type="n")
+  plot.args = list(x = sign.lambda * log(cvobj$lambda), 
+    y = cvobj$cvm, ylim = range(cvobj$cvup, cvobj$cvlo), 
+    xlab = xlab, ylab = cvobj$name, type = "n")
   new.args = list(...)
   if (length(new.args)) plot.args[names(new.args)] = new.args
   do.call("plot", plot.args)

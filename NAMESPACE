@@ -11,8 +11,7 @@ export(kerndwd, cv.kerndwd, plot.kerndwd,
   plot.cv.kerndwd, predict.kerndwd, 
   
   ## kernel functions
-  "rbfdot", "laplacedot", "besseldot", "polydot", 
-  "vanilladot", "anovadot", "splinedot"
+  "rbfdot", "laplacedot", "besseldot", "polydot", "vanilladot", "anovadot", "splinedot" 
 )
 
 S3method("plot","kerndwd")
