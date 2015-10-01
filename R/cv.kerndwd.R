@@ -13,12 +13,15 @@ cv.kerndwd = function(x, y, kern, lambda, nfolds=5, foldid, ...) {
     nfolds = max(foldid)
   if (nfolds < 3) 
     stop("nfolds must be larger than 3; nfolds=5 recommended.")
+  lambda = sort(lambda, decreasing=TRUE)
   nlams = double(nfolds)
   outlist = as.list(nlams)
   for (i in seq(nfolds)) {
     which = foldid == i
     outlist[[i]] = kerndwd(x=x[!which, , drop=FALSE], y=y[!which], 
       kern=kern, lambda=lambda, ...)
+    if (outlist[[i]]$jerr != 0) 
+      stop(paste("Error occurs when fitting the", i, "th folder."))
   }
   cvstuff = cvpath(outlist, x, y, kern, lambda, foldid, 
     x.row, ...)
@@ -36,9 +39,10 @@ cv.kerndwd = function(x, y, kern, lambda, nfolds=5, foldid, ...) {
 cvpath = function(outlist, x, y, kern, lambda,  
   foldid, x.row, ...){
   ####################################################################
-  y = c(-1, 1)[as.factor(y)]
-  if (!all(y %in% c(-1, 1))) 
-    stop("y should be a factor with two levels.")
+  if (length(levels(factor(y))) == 2)
+    y = c(-1, 1)[as.factor(y)]
+  # if (!all(y %in% c(-1, 1))) 
+  #   stop("y should be a factor with two levels.")
   typenames = "mis-classification error"
   predmat = matrix(NA, x.row, length(lambda))
   nfolds = max(foldid)

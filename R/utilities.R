@@ -24,8 +24,8 @@ err = function(n, maxit) {
   if (n == 0) msg = ""
   if (n < 0) {    
     msg = paste0("convergence for ", -n, 
-        "th lambda value not reached after maxit=", maxit, 
-        " iterations; solutions for larger lambdas returned")
+      "th lambda value not reached after maxit=", maxit, 
+      " iterations; solutions for larger lambdas returned")
     n = -1
     msg = paste("From kerneltool fortran code:", msg)
   }

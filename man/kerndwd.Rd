@@ -22,7 +22,7 @@ kerndwd(x, y, kern, family=c("DWD", "LUM", "other"), lambda,
 	\item{maxit}{The maximum of iterations allowed. Default is 1e5.}
 }
 
-\details{Suppose that the generalized DWD loss is \eqn{V_q(u)=1-u}{V_q(u) = 1 - u} if \eqn{u \le q/(q+1)}{u <= q/(q+1)} and \eqn{\frac{1}{u^q}\frac{q^q}{(q+1)^(q+1)}}{(1/u)^q * q^q/(q+1)^{(q+1)}} if \eqn{u > q/(q+1)}{u > q/(q+1)}. The value of \eqn{\lambda}, i.e., \code{lambda}, is user-specified. 
+\details{Suppose that the generalized DWD loss is \eqn{V_q(u)=1-u}{V_q(u) = 1 - u} if \eqn{u \le q/(q+1)}{u <= q/(q+1)} and \eqn{\frac{1}{u^q}\frac{q^q}{(q+1)^{(q+1)}}}{(1/u)^q * q^q/(q+1)^{(q+1)}} if \eqn{u > q/(q+1)}{u > q/(q+1)}. The value of \eqn{\lambda}, i.e., \code{lambda}, is user-specified. 
 
 In the linear case (\code{kern} is the inner product and N > p), the \code{\link{kerndwd}} fits a linear DWD by minimizing the L2 penalized DWD loss function,
 \deqn{\frac{1}{N}\sum_{i=1}^n V_q(y_i(\beta_0 + X_i'\beta)) + \lambda \beta' \beta.}{(1/N) * sum_i [V_q(y_i(\beta_0 + X_i'\beta))] + \lambda \beta' \beta.} 
@@ -36,7 +36,7 @@ The weighted linear DWD and the weighted kernel DWD are formulated as follows,
 \deqn{\frac{1}{N}\sum_{i=1}^n w_i \cdot V_q(y_i(\beta_0 + K_i' \alpha)) + \lambda \alpha' K \alpha,}{(1/N) * sum_i [w_i * V_q(y_i(\beta_0 + K_i' \alpha))] + \lambda \alpha' K \alpha,}
 where \eqn{w_i} is the ith element of \code{wt}. The choice of weight factors can be seen in the reference below.
 
-The loss function of LUM is \eqn{L(u)=1-u}{L(u) = 1 - u} if \eqn{u \le c/(c+1)}{u <= c/(c+1)} and \eqn{\frac{1}{1+c}\frac{a}{(1+c)u-c+a}^{a}}{(1/1+c) * {a/[(1+c)*u-c+a]} ^{q+1}} if \eqn{u > c/(c+1)}{u > c/(c+1)}. 
+The loss function of LUM is \eqn{L(u)=1-u}{L(u) = 1 - u} if \eqn{u \le c/(c+1)}{u <= c/(c+1)} and \eqn{\frac{1}{1+c}{(\frac{a}{(1+c)u-c+a})}^{a}}{(1/1+c) * {a/[(1+c)*u-c+a]}^{q+1}} if \eqn{u > c/(c+1)}{u > c/(c+1)}. 
 
 The package can also handle other loss function with quadratic marjorization functions. Details regarding the quadratic marjorization functions are seen as the reference below. For example, the huber hinge loss is \eqn{H(u) = 0}{H(u) = 0} if \eqn{u > 1}{u > 1}, \eqn{H(u) = \frac{(1-t)^2}{2\delta}}{H(u)=(1 - u)^2/(2 * \delta)} if \eqn{1-\delta < u \le 1}{1 - \delta < u <= 1}, and \eqn{H(u) = 1 - u - \delta/2}{H(u) = 1 - u - \delta/2} if \eqn{u \le 1 - \delta}{u <= 1 - \delta}. The \code{const} argument for the huber loss is \eqn{1/\delta}
 }

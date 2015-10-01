@@ -7,7 +7,7 @@ cv.kerndwd(x, y, kern, lambda, nfolds=5, foldid, ...)
 }
 \arguments{
     \item{x}{A matrix of predictors, i.e., the matrix \code{x} used in \code{\link{kerndwd}}.}
-    \item{y}{A vector of binary class labels, i.e., the \code{y} used in \code{\link{kerndwd}}.}
+    \item{y}{A vector of binary class labels, i.e., the \code{y} used in \code{\link{kerndwd}}. \code{y} has to be two levels.}
     \item{kern}{A kernel function.}
     \item{lambda}{A user specified \code{lambda} candidate sequence for cross-validation.}
     \item{nfolds}{The number of folds. Default value is 5. The allowable range is from 3 to the sample size.}

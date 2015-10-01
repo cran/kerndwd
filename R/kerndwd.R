@@ -4,7 +4,8 @@ kerndwd = function(x, y, kern, family=c("DWD", "LUM", "other"),
   ####################################################################
   ## data setup
   this.call = match.call()
-  y = c(-1, 1)[as.factor(drop(y))]
+  if (length(levels(factor(y))) == 2)
+    y = c(-1, 1)[as.factor(drop(y))]
   x = as.matrix(x)
   if (!all(y %in% c(-1, 1))) 
     stop("y should be a factor with two levels.")

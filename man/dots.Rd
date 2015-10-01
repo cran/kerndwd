@@ -22,13 +22,13 @@
   The Polynomial kernel \eqn{k(x,x') = (scale <x, x'> + offset)^{degree}}{k(x,x') = (scale <x, x'> + offset)^degree}\cr
   The Linear kernel \eqn{k(x,x') = <x, x'>}{k(x, x') = <x, x'>}\cr
   The Laplacian kernel \eqn{k(x,x') = \exp(-\sigma \|x - x'\|)}{k(x, x') = exp(-\sigma|x - x'|)} \cr
-  The Bessel kernel \eqn{k(x,x') = (- Bessel_{(\nu+1)}^n \sigma \|x - x'\|^2)}{k(x, x') = (-Bessel{(\nu+1)}^n \sigma|x - x'|^2)} \cr
+  The Bessel kernel \eqn{k(x,x') = (- \mathrm{Bessel}_{(\nu+1)}^n \sigma \|x - x'\|^2)}{k(x, x') = (-Bessel{(\nu+1)}^n \sigma|x - x'|^2)} \cr
   The ANOVA RBF kernel \eqn{k(x,x') = \sum_{1\leq i_1 \ldots < i_D \leq N} 
   \prod_{d=1}^D k(x_{id}, {x'}_{id})}{k(x, x') = sum_{1 <= i_1, ..., < i_D <= N} 
   prod_{d=1}^D k(x_id, x'_id)} where k(x, x) is a Gaussian RBF kernel. \cr
-  The Spline kernel \eqn{ \prod_{d=1}^D 1 + x_i x_j + x_i x_j min(x_i,
-    x_j)  - \frac{x_i + x_j}{2} min(x_i,x_j)^2 +
-    \frac{min(x_i,x_j)^3}{3}}{prod_{d=1}^D 1 + x_i x_j + x_i x_j min(x_i,
+  The Spline kernel \eqn{ \prod_{d=1}^D 1 + x_i x_j + x_i x_j \min(x_i,
+    x_j)  - \frac{x_i + x_j}{2} \min(x_i,x_j)^2 +
+    \frac{\min(x_i,x_j)^3}{3}}{prod_{d=1}^D 1 + x_i x_j + x_i x_j min(x_i,
     x_j)  - (x_i + x_j)/2 min(x_i,x_j)^2 +
     (min(x_i,x_j)^3)/3}.
 }
