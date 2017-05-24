@@ -15,6 +15,7 @@
 \alias{besselkernel-class}
 \alias{laplacekernel-class}
 \alias{splinekernel-class}
+\alias{sigest}
 \title{Kernel Functions}
 \description{
   Kernel functions provided in the R package \code{kernlab}. Details can be seen in the reference below.\cr
@@ -31,6 +32,7 @@
     \frac{\min(x_i,x_j)^3}{3}}{prod_{d=1}^D 1 + x_i x_j + x_i x_j min(x_i,
     x_j)  - (x_i + x_j)/2 min(x_i,x_j)^2 +
     (min(x_i,x_j)^3)/3}.
+  The parameter \code{sigma} used in \code{rbfdot} can be selected by \code{sigest()}.
 }
 \usage{
 rbfdot(sigma = 1)
@@ -40,6 +42,7 @@ laplacedot(sigma = 1)
 besseldot(sigma = 1, order = 1, degree = 1)
 anovadot(sigma = 1, degree = 1)
 splinedot()
+sigest(x)
 }
 
 \arguments{
@@ -50,6 +53,7 @@ splinedot()
   \item{scale}{The scaling parameter of the polynomial kernel function.}
   \item{offset}{The offset used in a polynomial kernel.}
   \item{order}{The order of the Bessel function to be used as a kernel.}
+  \item{x}{The design matrix used in \code{kerndwd} when \code{sigest} is called to estimate \code{sigma} in \code{rbfdot()}.}
 }
 \details{These R functions and descriptions are directly duplicated and/or adapted from the R package \code{kernlab}.}  
 
@@ -58,9 +62,9 @@ splinedot()
 }
 
 \references{
-Wang, B. and Zou, H. (2015)
-``Another Look at DWD: Thrifty Algorithm and Bayes Risk Consistency in RKHS". \cr
-\url{http://arxiv.org/abs/1508.05913v1.pdf}\cr
+Wang, B. and Zou, H. (2017)
+``Another Look at Distance Weighted Discrimination". \cr
+\url{http://arxiv.org/abs/1508.05913}\cr
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 
 \emph{Journal of Statistical Software}, \bold{11}(9), 1--20.\cr
@@ -74,14 +78,14 @@ kfun = vanilladot()
 # generate a Laplacian kernel function with sigma = 1
 kfun = laplacedot(sigma=1)
 
-# generate a Gaussian kernel function with sigma = 1
-kfun = rbfdot(sigma=1)
+# generate a Gaussian kernel function with sigma estimated by sigest()
+kfun = rbfdot(sigma=sigest(BUPA$X))
 
 # set kern=kfun when fitting a kerndwd object
 data(BUPA)
 BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
 lambda = 10^(seq(-3, 3, length.out=10))
-m1 = kerndwd(BUPA$X, BUPA$y, kern=kfun, family="DWD",
+m1 = kerndwd(BUPA$X, BUPA$y, kern=kfun,
   qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
 }
 \keyword{kernel methods}

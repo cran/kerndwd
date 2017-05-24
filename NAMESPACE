@@ -1,21 +1,21 @@
-useDynLib("kerndwd")
+useDynLib("kerndwd", .registration = TRUE)
 
 import("methods")
 importFrom("graphics", "abline", "axis", "matplot", "points", "segments")
 importFrom("grDevices", "gray.colors")
+importFrom("stats", "nobs")
 importFrom("stats", "predict")
+importFrom("stats", "quantile")
 importFrom("utils", "capture.output")
-  
-  
+
 export(kerndwd, cv.kerndwd, plot.kerndwd, 
-  plot.cv.kerndwd, predict.kerndwd, 
-  
+  plot.cv.kerndwd, predict.kerndwd, tunedwd, sigest,
   ## kernel functions
   "rbfdot", "laplacedot", "besseldot", "polydot", "vanilladot", "anovadot", "splinedot" 
 )
 
-S3method("plot","kerndwd")
-S3method("plot","cv.kerndwd")
-S3method("predict","kerndwd")
+S3method("plot", "kerndwd")
+S3method("plot", "cv.kerndwd")
+S3method("predict", "kerndwd")
 
 exportClasses("rbfkernel", "laplacekernel", "besselkernel", "polykernel", "vanillakernel", "anovakernel", "splinekernel")

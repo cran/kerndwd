@@ -3,7 +3,7 @@
 \title{cross-validation}
 \description{Carry out a cross-validation for \code{\link{kerndwd}} to find optimal values of the tuning parameter \code{lambda}.}
 \usage{
-cv.kerndwd(x, y, kern, lambda, nfolds=5, foldid, ...)
+cv.kerndwd(x, y, kern, lambda, nfolds=5, foldid, wt, ...)
 }
 \arguments{
     \item{x}{A matrix of predictors, i.e., the matrix \code{x} used in \code{\link{kerndwd}}.}
@@ -11,7 +11,8 @@ cv.kerndwd(x, y, kern, lambda, nfolds=5, foldid, ...)
     \item{kern}{A kernel function.}
     \item{lambda}{A user specified \code{lambda} candidate sequence for cross-validation.}
     \item{nfolds}{The number of folds. Default value is 5. The allowable range is from 3 to the sample size.}
-    \item{foldid}{An optional vector with values between 1 and \code{nfold}, representing the folder indices for each observation. If supplied, \code{nfold} can be missing.}
+    \item{foldid}{An optional vector with values between 1 and \code{nfold}, representing the fold indices for each observation. If supplied, \code{nfold} can be missing.}
+     \item{wt}{A vector of length \eqn{n} for weight factors. When \code{wt} is missing or \code{wt=NULL}, an unweighted DWD is fitted. } 
     \item{\dots}{Other arguments being passed to \code{\link{kerndwd}}.}
 }
 
@@ -23,19 +24,19 @@ cv.kerndwd(x, y, kern, lambda, nfolds=5, foldid, ...)
     \item{cvsd}{A vector of length \code{length(lambda)}: estimates of standard error of \code{cvm}.}
     \item{cvupper}{The upper curve: \code{cvm + cvsd}.}
     \item{cvlower}{The lower curve: \code{cvm - cvsd}.}
-    \item{name}{``mis-classification error" or "DWD loss", depending on \code{pred.loss}, for plotting purposes.}
     \item{lambda.min}{The \code{lambda} incurring the minimum cross validation error \code{cvm}.}
     \item{lambda.1se}{The largest value of \code{lambda} such that error is within one standard error of the minimum.}
     \item{cvm.min}{The cross-validation error corresponding to \code{lambda.min}, i.e., the least error.}
     \item{cvm.1se}{The cross-validation error corresponding to \code{lambda.1se}.}
 }
 
+
 \author{Boxiang Wang and Hui Zou\cr
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
-Wang, B. and Zou, H. (2015)
-``Another Look at DWD: Thrifty Algorithm and Bayes Risk Consistency in RKHS". \cr
-\url{http://arxiv.org/abs/1508.05913v1.pdf}\cr
+Wang, B. and Zou, H. (2017)
+``Another Look at Distance Weighted Discrimination". \cr
+\url{http://arxiv.org/abs/1508.05913}\cr
 Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22\cr
 \url{http://www.jstatsoft.org/v33/i01/paper}
 }
@@ -45,10 +46,9 @@ Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for g
 set.seed(1)
 data(BUPA)
 BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
-lambda = 10^(seq(-3, 3, length.out=10))
-kern = rbfdot(sigma=1)
-m.cv = cv.kerndwd(BUPA$X, BUPA$y, kern, family="DWD", 
-  qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
+lambda = 10^(seq(3, -3, length.out=10))
+kern = rbfdot(sigma=sigest(BUPA$X))
+m.cv = cv.kerndwd(BUPA$X, BUPA$y, kern, qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
 m.cv$lambda.min
 }
 

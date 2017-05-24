@@ -17,9 +17,9 @@ Plots the solution paths as a coefficient profile plot. This function is modifie
 \author{Boxiang Wang and Hui Zou\cr
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
-Wang, B. and Zou, H. (2015)
-``Another Look at DWD: Thrifty Algorithm and Bayes Risk Consistency in RKHS". \cr
-\url{http://arxiv.org/abs/1508.05913v1.pdf}\cr
+Wang, B. and Zou, H. (2017)
+``Another Look at Distance Weighted Discrimination". \cr
+\url{http://arxiv.org/abs/1508.05913}\cr
 Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22\cr
 \url{http://www.jstatsoft.org/v33/i01/paper}
 }
@@ -30,7 +30,7 @@ Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for g
 data(BUPA)
 BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
 lambda = 10^(seq(-3, 3, length.out=10))
-kern = rbfdot(sigma=1)
+kern = rbfdot(sigma=sigest(BUPA$X))
 m1 = kerndwd(BUPA$X, BUPA$y, kern, qval=1, 
   lambda=lambda, eps=1e-5, maxit=1e5)
 plot(m1, color=TRUE)

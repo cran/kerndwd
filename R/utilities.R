@@ -10,8 +10,8 @@ cvcompute = function(mat, foldid, nlams) {
     outmat[i, ] = colMeans(mati, na.rm=TRUE)
     good[i, seq(nlams[i])] = 1
   }
-  N = colSums(good)
-  list(cvraw = outmat, N = N)
+  cvn = colSums(good)
+  list(cvraw = outmat, cvn = cvn)
 }
 
 dwdloss = function(u, qval) {
@@ -54,11 +54,17 @@ getmin = function(lambda, cvm, cvsd) {
   id1se = match(lambda.1se, lambda)
   cv.1se = cvm[id1se]
   list(lambda.min = lambda.min, lambda.1se = lambda.1se, 
-	  cvm.min = cvmin, cvm.1se = cv.1se)
+    cvm.min = cvmin, cvm.1se = cv.1se)
 }
 
-lumloss = function(u, aval, cval) {
-  ## LUM Loss
-  ifelse(u < (cval/(cval+1)), 1 - u,
-    (aval / ((1 + cval) * u - cval + aval) ^ aval ) / (1 + cval))
+sigest = function(x) {
+  frac = 0.5
+  m = dim(x)[1]
+  n = floor(frac*m)
+  index = sample(1:m, n, replace = TRUE)
+  index2 = sample(1:m, n, replace = TRUE)
+  temp = x[index,, drop=FALSE] - x[index2,,drop=FALSE]
+  dist = rowSums(temp^2)
+  srange = 1/quantile(dist[dist!=0], probs=c(0.9,0.5,0.1))
+  mean(srange[c(1,3)])
 }
