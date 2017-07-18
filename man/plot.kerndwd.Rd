@@ -18,9 +18,9 @@ Plots the solution paths as a coefficient profile plot. This function is modifie
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
 Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination". \cr
+``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
 \url{http://arxiv.org/abs/1508.05913}\cr
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22\cr
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22.\cr
 \url{http://www.jstatsoft.org/v33/i01/paper}
 }
 

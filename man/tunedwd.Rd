@@ -7,7 +7,7 @@ tunedwd(x, y, kern, lambda, qvals=1, eps=1e-5, maxit=1e+5, nfolds=5, foldid=NULL
 }
 \arguments{
     \item{x}{A matrix of predictors, i.e., the matrix \code{x} used in \code{\link{kerndwd}}.}
-    \item{y}{A vector of binary class labels, i.e., the \code{y} used in \code{\link{kerndwd}}. \code{y} has to be two levels.}
+    \item{y}{A vector of binary class labels, i.e., the \code{y} used in \code{\link{kerndwd}}. \code{y} has two levels.}
     \item{kern}{A kernel function.}
     \item{lambda}{A user specified \code{lambda} candidate sequence for cross-validation.}
     \item{qvals}{A vector containing the index of the generalized DWD. Default value is 1.}
@@ -33,9 +33,9 @@ A \code{tunedwd.kerndwd} object including the cross-validation results is return
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
 Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination". \cr
+``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
 \url{http://arxiv.org/abs/1508.05913}\cr
-Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22\cr
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22.\cr
 \url{http://www.jstatsoft.org/v33/i01/paper}
 }
 

@@ -26,8 +26,9 @@ Predict the binary class labels or the fitted values of an \code{\link{kerndwd}}
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
 Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination". \cr
+``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
 \url{http://arxiv.org/abs/1508.05913}\cr
+
 }
  
 \seealso{\code{\link{kerndwd}}}

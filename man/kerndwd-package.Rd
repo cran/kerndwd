@@ -24,7 +24,7 @@ The main functions of the package \code{\link{kerndwd}} include:\cr
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
 Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination". \cr
+``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
 \url{http://arxiv.org/abs/1508.05913}\cr
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 

@@ -7,7 +7,7 @@ kerndwd(x, y, kern, lambda, qval=1, wt, eps=1e-05, maxit=1e+05)
 }
 \arguments{
 	\item{x}{A numerical matrix with \eqn{N} rows and \eqn{p} columns for predictors.}
-	\item{y}{A vector of length \eqn{p} for binary responses. The element of \code{y} is either -1 or 1.}
+	\item{y}{A vector of length \eqn{N} for binary responses. The element of \code{y} is either -1 or 1.}
 	\item{kern}{A kernel function; see \code{\link{dots}}.}
   \item{lambda}{A user supplied \code{lambda} sequence.}
   \item{qval}{The exponent index of the generalized DWD. Default value is 1.}
@@ -33,7 +33,7 @@ where \eqn{w_i} is the ith element of \code{wt}. The choice of weight factors ca
 
 \value{
 An object with S3 class \code{\link{kerndwd}}.
-  \item{alpha}{A matrix of DWD coefficients at each \code{lambda} value. The dimension is \code{(N+1)*length(lambda)} in the linear case and \code{(N+1)*length(lambda)} in the kernel case.}
+  \item{alpha}{A matrix of DWD coefficients at each \code{lambda} value. The dimension is \code{(p+1)*length(lambda)} in the linear case and \code{(N+1)*length(lambda)} in the kernel case.}
   \item{lambda}{The \code{lambda} sequence.}
   \item{npass}{Total number of MM iterations for all lambda values. }
   \item{jerr}{Warnings and errors; 0 if none.}
@@ -45,8 +45,9 @@ An object with S3 class \code{\link{kerndwd}}.
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
 Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination". \cr
+``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
 \url{http://arxiv.org/abs/1508.05913}\cr
+
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 
 \emph{Journal of Statistical Software}, \bold{11}(9), 1--20.\cr
