@@ -1,7 +1,7 @@
 \name{kerndwd}
 \alias{kerndwd}
 \title{solve Linear DWD and Kernel DWD}
-\description{Fit the linear distance weighted discrimination (DWD) model and the DWD on Reproducing kernel Hilbert space. The solution path is computed at a grid of values of tuning parameter \code{lambda}.}
+\description{Fit the linear generalized distance weighted discrimination (DWD) model and the generalized DWD on Reproducing kernel Hilbert space. The solution path is computed at a grid of values of tuning parameter \code{lambda}.}
 \usage{
 kerndwd(x, y, kern, lambda, qval=1, wt, eps=1e-05, maxit=1e+05)
 }
@@ -20,6 +20,8 @@ kerndwd(x, y, kern, lambda, qval=1, wt, eps=1e-05, maxit=1e+05)
 
 In the linear case (\code{kern} is the inner product and N > p), the \code{\link{kerndwd}} fits a linear DWD by minimizing the L2 penalized DWD loss function,
 \deqn{\frac{1}{N}\sum_{i=1}^n V_q(y_i(\beta_0 + X_i'\beta)) + \lambda \beta' \beta.}{(1/N) * sum_i [V_q(y_i(\beta_0 + X_i'\beta))] + \lambda \beta' \beta.} 
+
+If a linear DWD is fitted when N < p, a kernel DWD with the linear kernel is actually solved. In such case, the coefficient \eqn{\beta}{\beta} can be obtained from \eqn{\beta = X'\alpha.}{\beta = X'\alpha.} 
 
 In the kernel case, the \code{\link{kerndwd}} fits a kernel DWD by minimizing
 \deqn{\frac{1}{N}\sum_{i=1}^n V_q(y_i(\beta_0 + K_i' \alpha)) + \lambda \alpha' K \alpha,}{(1/N) * sum_i [V_q(y_i(\beta_0 + K_i' \alpha))] + \lambda \alpha' K \alpha,}
@@ -44,10 +46,10 @@ An object with S3 class \code{\link{kerndwd}}.
 \author{Boxiang Wang and Hui Zou\cr
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
-Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
-\url{http://arxiv.org/abs/1508.05913}\cr
-
+Wang, B. and Zou, H. (2018)
+``Another Look at Distance Weighted Discrimination," 
+\emph{Journal of Royal Statistical Society, Series B}, \bold{80}(1), 177--198. \cr
+\url{https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244}\cr
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 
 \emph{Journal of Statistical Software}, \bold{11}(9), 1--20.\cr

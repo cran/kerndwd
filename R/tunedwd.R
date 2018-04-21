@@ -42,7 +42,7 @@ tunedwd = function(x, y, kern, lambda, qvals=1, eps=1e-5, maxit=1e+5,
     y.train = y[!which]
     nobs.i = length(y.train)
     x.test = drop(as.matrix(x[which, , drop=FALSE]))
-    if (is.null(dim(x.test))) dim(x.test) = c(1, nobs.i)
+    if (is.null(dim(x.test))) dim(x.test) = c(1, np)
     if (is.linr) {
       fit = .Fortran("lqdwd", qvals, qlen, as.double(x.train), 
         nobs.i, np, as.double(y.train), nlam, ulam, eps, maxit, gam,

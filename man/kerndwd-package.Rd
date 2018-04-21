@@ -5,7 +5,7 @@
 Kernel Distance Weighted Discrimination
 }
 \description{
-Extremely novel efficient procedures for solving linear DWD and kernel DWD in reproducing kernel Hilbert spaces for classification. The algorithm is based on the majorization-minimization (MM) principle to compute the entire solution path at a given fine grid of regularization parameters.\cr
+Extremely novel efficient procedures for solving linear generalized DWD and kernel generalized DWD in reproducing kernel Hilbert spaces for classification. The algorithm is based on the majorization-minimization (MM) principle to compute the entire solution path at a given fine grid of regularization parameters.\cr
 }
 
 \details{
@@ -23,9 +23,10 @@ The main functions of the package \code{\link{kerndwd}} include:\cr
 \author{Boxiang Wang and Hui Zou\cr
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
-Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
-\url{http://arxiv.org/abs/1508.05913}\cr
+Wang, B. and Zou, H. (2018)
+``Another Look at Distance Weighted Discrimination," 
+\emph{Journal of Royal Statistical Society, Series B}, \bold{80}(1), 177--198. \cr
+\url{https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244}\cr
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 
 \emph{Journal of Statistical Software}, \bold{11}(9), 1--20.\cr

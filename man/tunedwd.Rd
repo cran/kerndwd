@@ -1,7 +1,7 @@
 \name{tunedwd}
 \alias{tunedwd}
-\title{fast tune method for DWD}
-\description{A fast implementaiton of cross-validation for \code{\link{kerndwd}} to find optimal values of the tuning parameter \code{lambda}.}
+\title{fast tune procedure for DWD}
+\description{A fast implementaiton of cross-validation for \code{\link{kerndwd}} to find the optimal values of the tuning parameter \code{lambda}.}
 \usage{
 tunedwd(x, y, kern, lambda, qvals=1, eps=1e-5, maxit=1e+5, nfolds=5, foldid=NULL)
 }
@@ -18,8 +18,8 @@ tunedwd(x, y, kern, lambda, qvals=1, eps=1e-5, maxit=1e+5, nfolds=5, foldid=NULL
 }
 
 
-\details{This function returns the best 
-\code{q} and \code{lambda} selected by cross-validation. An efficient tune method is employed to accelerate the algorithm.
+\details{This function returns the best tuning parameters
+\code{q} and \code{lambda} by cross-validation. An efficient tune method is employed to accelerate the algorithm.
 }
 
 \value{
@@ -32,9 +32,10 @@ A \code{tunedwd.kerndwd} object including the cross-validation results is return
 \author{Boxiang Wang and Hui Zou\cr
 Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
 \references{
-Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
-\url{http://arxiv.org/abs/1508.05913}\cr
+Wang, B. and Zou, H. (2018)
+``Another Look at Distance Weighted Discrimination," 
+\emph{Journal of Royal Statistical Society, Series B}, \bold{80}(1), 177--198. \cr
+\url{https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244}\cr
 Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22.\cr
 \url{http://www.jstatsoft.org/v33/i01/paper}
 }

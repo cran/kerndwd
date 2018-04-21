@@ -4,6 +4,7 @@ kerndwd = function(x, y, kern, lambda, qval=1, wt=NULL, eps=1e-05, maxit=1e+05) 
   this.call = match.call()
   if (length(levels(factor(y))) == 2)
     y = c(-1, 1)[as.factor(drop(y))]
+  # x is required to be a matrix with more than more column
   x = as.matrix(x)
   if (!all(y %in% c(-1, 1))) 
     stop("y should be a factor with two levels.")

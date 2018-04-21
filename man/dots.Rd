@@ -62,9 +62,10 @@ sigest(x)
 }
 
 \references{
-Wang, B. and Zou, H. (2017)
-``Another Look at Distance Weighted Discrimination," \emph{Journal of Royal Statistical Society, Series B}, to appear. \cr
-\url{http://arxiv.org/abs/1508.05913}\cr
+Wang, B. and Zou, H. (2018)
+``Another Look at Distance Weighted Discrimination," 
+\emph{Journal of Royal Statistical Society, Series B}, \bold{80}(1), 177--198. \cr
+\url{https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244}\cr
 
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 
