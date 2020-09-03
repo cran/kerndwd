@@ -23,7 +23,7 @@ Predict the binary class labels or the fitted values of an \code{\link{kerndwd}}
 \value{Returns either the predicted class labels or the fitted values, depending on the choice of \code{type}.}
 
 \author{Boxiang Wang and Hui Zou\cr
-Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
+Maintainer: Boxiang Wang  \email{boxiang-wang@uiowa.edu}}
 \references{
 Wang, B. and Zou, H. (2018)
 ``Another Look at Distance Weighted Discrimination," 

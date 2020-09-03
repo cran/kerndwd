@@ -15,7 +15,7 @@ Plot cross-validation error curves with the upper and lower standard deviations 
 }
 
 \author{Boxiang Wang and Hui Zou\cr
-Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
+Maintainer: Boxiang Wang  \email{boxiang-wang@uiowa.edu}}
 \references{
 Wang, B. and Zou, H. (2018)
 ``Another Look at Distance Weighted Discrimination," 
@@ -24,7 +24,7 @@ Wang, B. and Zou, H. (2018)
 
 Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
 linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22.\cr
-\url{http://www.jstatsoft.org/v33/i01/paper}
+\url{https://www.jstatsoft.org/v33/i01/paper}
 }
  
 \seealso{\code{\link{cv.kerndwd}}.}

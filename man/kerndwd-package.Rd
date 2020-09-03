@@ -21,7 +21,7 @@ The main functions of the package \code{\link{kerndwd}} include:\cr
 }
 
 \author{Boxiang Wang and Hui Zou\cr
-Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
+Maintainer: Boxiang Wang  \email{boxiang-wang@uiowa.edu}}
 \references{
 Wang, B. and Zou, H. (2018)
 ``Another Look at Distance Weighted Discrimination," 
@@ -30,11 +30,11 @@ Wang, B. and Zou, H. (2018)
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 
 \emph{Journal of Statistical Software}, \bold{11}(9), 1--20.\cr
-\url{http://www.jstatsoft.org/v11/i09/paper}\cr
+\url{https://www.jstatsoft.org/v11/i09/paper}\cr
 Marron, J.S., Todd, M.J., Ahn, J. (2007)
 ``Distance-Weighted Discrimination"", 
 \emph{Journal of the American Statistical Association}, \bold{102}(408), 1267--1271.\cr
-\url{https://faculty.franklin.uga.edu/jyahn/sites/faculty.franklin.uga.edu.jyahn/files/DWD3.pdf}\cr
+\url{https://www.tandfonline.com/doi/abs/10.1198/016214507000001120}\cr
 }
  
 \keyword{DWD}

@@ -30,14 +30,14 @@ A \code{tunedwd.kerndwd} object including the cross-validation results is return
 
 
 \author{Boxiang Wang and Hui Zou\cr
-Maintainer: Boxiang Wang  \email{boxiang@umn.edu}}
+Maintainer: Boxiang Wang  \email{boxiang-wang@uiowa.edu}}
 \references{
 Wang, B. and Zou, H. (2018)
 ``Another Look at Distance Weighted Discrimination," 
 \emph{Journal of Royal Statistical Society, Series B}, \bold{80}(1), 177--198. \cr
 \url{https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244}\cr
 Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," \emph{Journal of Statistical Software}, \bold{33}(1), 1--22.\cr
-\url{http://www.jstatsoft.org/v33/i01/paper}
+\url{https://www.jstatsoft.org/v33/i01/paper}
 }
 
 \seealso{\code{\link{kerndwd}}.}

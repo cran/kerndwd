@@ -20,7 +20,7 @@ A list with the following elements:
 }
 
 \source{The data set is available for download from UCI machine learning repository. \cr
-\url{https://archive.ics.uci.edu/ml/datasets/Liver+Disorders}}
+}
 
 \examples{
 # load data set

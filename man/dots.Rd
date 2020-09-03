@@ -70,7 +70,7 @@ Wang, B. and Zou, H. (2018)
 Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
 ``kernlab -- An S4 Package for Kernel Methods in R", 
 \emph{Journal of Statistical Software}, \bold{11}(9), 1--20.\cr
-\url{http://www.jstatsoft.org/v11/i09/paper}\cr
+\url{https://www.jstatsoft.org/v11/i09/paper}\cr
 }
 \examples{
 data(BUPA)
